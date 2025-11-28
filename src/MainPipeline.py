@@ -37,9 +37,7 @@ save_plot(fig, plot_name=f"{features_set}_BoxPlot",
           base_output_dir=f"training_results")
 
 fig = plot_density_distributions(X_train, X_val, X_test)
-save_plot(fig, plot_name=f"{features_set}_DesnsityPlot",
-          experiment_name=f"{features_set}",
-          base_output_dir=f"training_results")
+
 #%% Run/Load the hyperparameter Study
 study = None
 trial_number = None

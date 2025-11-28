@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
+from src.utils.genPlots import save_plot
+from src.settings.settings import features_set
 
 #%% Plot density distributions
 def plot_density_distributions(X_train, X_val, X_test):
@@ -29,4 +31,7 @@ def plot_density_distributions(X_train, X_val, X_test):
 
     plt.tight_layout()
     plt.show()
+    save_plot(fig, plot_name=f"{features_set}_DesnsityPlot",
+              experiment_name=f"{features_set}",
+              base_output_dir=f"training_results")
     return fig
