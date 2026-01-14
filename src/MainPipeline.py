@@ -115,15 +115,15 @@ if study_vis:
 
     elif mode == "tuning" or mode == "predict":
         visualize_study(study)
-        #plot_study_history(study, start=len(study.trials) - 10, end=len(study.trials))
-        #plot_param_frequencies(study, bins_for_float=50, max_unique=70, round_float=20)
-        #plot_param_frequencies_interactive(study, max_unique=20, round_float=3, bins_for_float=20)
-        #history = study.trials[study.best_trial.number].user_attrs.get("history")
-        #hist_plot = plot_hist(history, params=study.best_trial.params)
-        #save_plot(fig=hist_plot, plot_name= "training_history",
-        #          base_output_dir=f"{trials_dir}/{study.trials[study.best_trial.number].number}",
-        #          experiment_name=" "
-        #         )
+        plot_study_history(study, start=len(study.trials) - 10, end=len(study.trials))
+        plot_param_frequencies(study, bins_for_float=50, max_unique=70, round_float=20)
+        plot_param_frequencies_interactive(study, max_unique=20, round_float=3, bins_for_float=20)
+        history = study.trials[study.best_trial.number].user_attrs.get("history")
+        hist_plot = plot_hist(history, params=study.best_trial.params)
+        save_plot(fig=hist_plot, plot_name= "training_history",
+                  base_output_dir=f"{trials_dir}/{study.trials[study.best_trial.number].number}",
+                  experiment_name=" "
+                 )
         parallelCoordinatePlot(study_df, leading_column = "nMAE",
                                colorbar=True,
                                style="viridis",  # "viridis", "plasma", "inferno", "magma", "cividis",
