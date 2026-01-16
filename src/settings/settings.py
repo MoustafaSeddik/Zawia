@@ -9,19 +9,20 @@ print(f"{Fore.RED}CUDA version: {Style.RESET_ALL}{torch.version.cuda}")
 print(f"{Fore.RED}PyTorch version: {Style.RESET_ALL}{torch.__version__}")
 
 #%% Settings parameters
-mode = "analysis"   # "training" or "tuning", "predict", "explore", "analysis"
+mode = "analysis"   # "training" or "tuning", "predict", "analysis"
+
 study_vis = True
 predict_vis = True
 predict = True
 
-features_set = "X4"  # "F-din" or "X1"  "X2", "X3" or "X4"
+features_set = "X1"  # "X1"  "X2", "X3" or "X4"
 normalization = "standardScaler" # "minMax", "standardScaler", "robustScaler", "powerTransformer""
 
 train_filename = f"data_training/{features_set}.npy"
 target_filename = f"data_training/y.npy"
 
-iteration = 4 #  "_1" the number of times we tuned the hyperparameters for a specific feature set & normalization
-study_name = f"{features_set}Model_{normalization}_{iteration}"  # 'F-dinModel_optimization' , f"F-dinModel_{normalization}"
+iteration = 4 # the number of times we tuned the hyperparameters for a specific feature set & normalization
+study_name = f"{features_set}Model_{normalization}_{iteration}"
 database_name = f"{normalization}_{features_set}_study_{iteration}.db"  #  or "my_regression_study.db" for older studies, f"{normalization}_study.db"
 study_folder_name = f"optuna_results/{features_set}"
 

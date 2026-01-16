@@ -11,6 +11,7 @@ from src.utils.helpers import (ScatterSurfacedata,
                                setget_model_path, study_results)
 from src.inference.Predict_plots import plot_residual, plot_residual_hist, normalQQ_plot
 from src.data_preprocessing.EDA_plots import plot_density_distributions
+
 #%% checking setting
 print(f"{Fore.RED}mode: {Style.RESET_ALL}{mode}")
 print(f"{Fore.RED}type of dataset: {Style.RESET_ALL}{features_set}")
@@ -38,7 +39,9 @@ save_plot(fig, plot_name=f"{features_set}_BoxPlot",
 
 fig = plot_density_distributions(X_train, X_val, X_test)
 
-#%% Run/Load the hyperparameter Study
+#%% Run/Load Study/ training/prediction
+
+# initialize variables
 study = None
 trial_number = None
 param, history = None, {}
@@ -65,6 +68,7 @@ elif mode == "predict":
               base_output_dir=f"{study_folder_name}/{study_name}",
               experiment_name=" "
     )
+
 elif mode == "training":
     # Load the study from the database
     study = optuna.load_study(study_name=study_name, storage=storage_url)
@@ -115,20 +119,21 @@ if study_vis:
 
     elif mode == "tuning" or mode == "predict":
         visualize_study(study)
-        plot_study_history(study, start=len(study.trials) - 10, end=len(study.trials))
-        plot_param_frequencies(study, bins_for_float=50, max_unique=70, round_float=20)
-        plot_param_frequencies_interactive(study, max_unique=20, round_float=3, bins_for_float=20)
+
         history = study.trials[study.best_trial.number].user_attrs.get("history")
         hist_plot = plot_hist(history, params=study.best_trial.params)
+
         save_plot(fig=hist_plot, plot_name= "training_history",
                   base_output_dir=f"{trials_dir}/{study.trials[study.best_trial.number].number}",
                   experiment_name=" "
                  )
+
         parallelCoordinatePlot(study_df, leading_column = "nMAE",
                                colorbar=True,
                                style="viridis",  # "viridis", "plasma", "inferno", "magma", "cividis",
                                interpolation='linear',
                                cross_val=True)
+
     elif mode == "analysis":
         fig = Plot_feature_sets(iteration="_4", trials=10)
         save_plot(fig=fig, plot_name="nMAE_vs_duration",
@@ -177,43 +182,3 @@ if mode == "predict" or predict == True:
                            zenSurface, aziSurface, rSurface, show=True,
                            fn=f"{trials_dir}/{study.trials[trial_number].number}/3D_surface_plot.html"
                            )
-
-#%% Exploring new ideas
-if mode == "explore" :
-    param = {
-        'epochs': 120, # Number of epochs to train the model
-        "loss function": "huber",
-        'lr': 1e-4,  # Learning rate for the optimizer
-        'batch size': 512,  # Batch size for training
-        'weight decay': 1e-5,  # Regularization parameter
-        'hidden_layers': 5,  # Number of hidden layers in the model
-        'hidden_units': 900,  # Number of hidden units in each layer #750
-        'width_type':"constant",  # 'constant', 'upward', or 'downward' #downward
-        'drop_out':0.2 # Dropout rate to prevent overfitting
-    }
-    (history, model, bestModel) = model_train(X_train, y_train, X_val, y_val,
-                                              params=param, trial= None,
-                                              optim = "Adam")
-    parent_dir = os.path.dirname(best_model_path)
-    if parent_dir and not os.path.isdir(parent_dir):
-        os.makedirs(parent_dir, exist_ok=True)
-    torch.save(bestModel.state_dict(), best_model_path)
-    print(f"{Fore.RED}Model saved to: {Style.RESET_ALL}{best_model_path}")
-
-    hist_plot = plot_hist(history, params=param)
-    save_plot(fig=hist_plot, plot_name=f"Adam_training_history",
-              base_output_dir=f"{trainings_folder_name}/{features_set}",
-              experiment_name=" "
-              )
-    # Predict using the best model
-    loaded_model = load_model(X_train = X_train,
-                              study = None,
-                              model_path = best_model_path,
-                              trial_number = param)
-    results_df   = evaluate_model(loaded_model, y_test ,testData)
-
-    true_pred_plot = plot_true_pred(results_df)
-    save_plot(fig=true_pred_plot, plot_name="true_pred_plot",
-              base_output_dir=f"{trainings_folder_name}/{features_set}",
-              experiment_name=" "
-              )
