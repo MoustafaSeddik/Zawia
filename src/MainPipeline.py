@@ -9,7 +9,7 @@ from src.utils.genPlots import *
 from src.inference.Evaluate import *
 from src.utils.helpers import (ScatterSurfacedata,
                                setget_model_path, study_results)
-from src.inference.Predict_plots import plot_residual, plot_residual_hist, normalQQ_plot
+
 from src.data_preprocessing.EDA_plots import plot_density_distributions
 
 #%% checking setting
@@ -154,23 +154,6 @@ if mode == "predict" or predict == True:
                   experiment_name=" "
                   )
 
-        residual_plot = plot_residual(results_df)
-        save_plot(fig=residual_plot, plot_name="residual_plot",
-                  base_output_dir=f"{trials_dir}/{study.trials[trial_number].number}",
-                  experiment_name=" "
-                  )
-
-        residual_hist = plot_residual_hist(results_df)
-        save_plot(fig=residual_hist, plot_name="residual_hist",
-                  base_output_dir=f"{trials_dir}/{study.trials[trial_number].number}",
-                  experiment_name=" "
-                  )
-
-        normalQQ_plot = normalQQ_plot(results_df)
-        save_plot(fig=normalQQ_plot, plot_name="normalQ_Q_plot",
-                  base_output_dir=f"{trials_dir}/{study.trials[trial_number].number}",
-                  experiment_name=" "
-                  )
         # plotting 3D plot
         (zenScatter, aziScatter, rScatter,
          zenSurface, aziSurface, rSurface) = ScatterSurfacedata(filename=df_train,
