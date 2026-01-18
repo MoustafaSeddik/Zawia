@@ -20,18 +20,13 @@ Before running the pipeline, you need to configure your experiment in the settin
     *   `"training"`: Trains a model with current parameters.
     *   `"tuning"`: Runs Optuna hyperparameter optimization.
     *   `"predict"`: Runs inference on new data.
-    *   `"analysis"`: Evaluates and visualizes results.
+    *   `"analysis"`: Evaluates and visualizes results of comparative analysis.
 *   **`features_set`**: Choose your input feature set (e.g., `"X1"`, `"X2"`, etc.).
 *   **`normalization`**: Choose your scaling method (e.g., `"standardScaler"`, `"minMax"`, `"robustScaler"`).
 *   **`iteration`**: Increment this number when running new tuning sessions to avoid overwriting previous databases.
 
 ### 3. Running the Pipeline
 The entire workflow is orchestrated through the `MainPipeline.py` file located in the `src` directory.
-
-To start the process, run:
-```shell script
-python src/MainPipeline.py
-```
 
 
 ## 📂 Project Structure
@@ -44,8 +39,4 @@ python src/MainPipeline.py
 
 ## 📊 Results and Visualization
 *   If `study_vis` is set to `True`, the pipeline will generate visualizations for the Optuna study.
-
-***
-
-### Quick Tip for PyCharm Users
-You can easily toggle the `mode` parameter in the editor and use the **Run** button (or `Shift + F10`) on `MainPipeline.py` to switch between tuning and training without leaving the IDE!
+*   If `predict_vis` is set to `True`, visualization of the prediction will be shown
