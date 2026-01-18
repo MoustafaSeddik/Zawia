@@ -30,6 +30,7 @@ The entire workflow is orchestrated through the `MainPipeline.py` file located i
 
 
 ## 📂 Project Structure
+```shell script
 Zawia/
 ├── data_training/          # Input data files (.npy format)
 ├── optuna_results/         # Hyperparameter tuning logs and databases
@@ -46,6 +47,7 @@ Zawia/
 ├── LICENSE                 # Project license
 ├── README.md               # Project documentation
 └── requirements.txt        # Project dependencies
+```
 
 ## 📊 Results and Visualization
 *   If `study_vis` is set to `True`, the pipeline will generate visualizations for the Optuna study.
