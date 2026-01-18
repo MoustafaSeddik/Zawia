@@ -30,12 +30,22 @@ The entire workflow is orchestrated through the `MainPipeline.py` file located i
 
 
 ## 📂 Project Structure
-
-*   **`src/MainPipeline.py`**: The entry point for the application.
-*   **`src/settings/`**: Contains configuration and parameter definitions.
-*   **`src/training/` & `src/inference/`**: Core logic for model training and evaluation.
-*   **`data_training/`**: Directory for your `.npy` data files (features and targets).
-*   **`optuna_results/`**: Stores SQLite databases and trial logs from hyperparameter tuning.
+Zawia/
+├── data_training/          # Input data files (.npy format)
+├── optuna_results/         # Hyperparameter tuning logs and databases
+├── src/                    # Source code
+│   ├── config/             # Configuration scripts
+│   ├── data_preprocessing/ # Data cleaning and transformation logic
+│   ├── inference/          # Scripts for model evaluation and prediction
+│   ├── models/             # Model architecture definitions
+│   ├── settings/           # Global parameters and experiment settings
+│   ├── training/           # Model training loops and logic
+│   ├── utils/              # Helper functions and utilities
+│   └── MainPipeline.py     # Main entry point to run the project
+├── .gitignore              # Files to be ignored by Git
+├── LICENSE                 # Project license
+├── README.md               # Project documentation
+└── requirements.txt        # Project dependencies
 
 ## 📊 Results and Visualization
 *   If `study_vis` is set to `True`, the pipeline will generate visualizations for the Optuna study.
